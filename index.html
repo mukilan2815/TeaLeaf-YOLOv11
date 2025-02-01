@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+</head>
+
+<body>
+    <h2>Upload an Image</h2>
+    <input type="file" id="imageInput" accept="image/*">
+    <button onclick="uploadImage()">Upload</button>
+    <h3>Prediction:</h3>
+    <p id="prediction"></p>
+    <h3>Symptoms:</h3>
+    <ul id="symptoms"></ul>
+    <h3>Biological Control:</h3>
+    <ul id="biological"></ul>
+    <h3>Chemical Control:</h3>
+    <ul id="chemical"></ul>
+    <h3>Mechanical Control:</h3>
+    <ul id="mechanical"></ul>
+    <h3>Processed Image:</h3>
+    <img id="processedImage" style="max-width: 500px; display: none;" />
+
+    <script>
+        async function uploadImage() {
+            const input = document.getElementById('imageInput');
+            if (input.files.length === 0) {
+                alert("Please select an image");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("file", input.files[0]);
+
+            try {
+                const response = await fetch("http://127.0.0.1:8000/yolo-v11/", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                // Update prediction text
+                document.getElementById("prediction").textContent = data.prediction;
+
+                // Update Symptoms list
+                const symptomsList = document.getElementById("symptoms");
+                symptomsList.innerHTML = '';  // Clear previous symptoms
+                data.symptoms.forEach(symptom => {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = symptom;
+                    symptomsList.appendChild(listItem);
+                });
+
+                // Update Biological Control list
+                const biologicalList = document.getElementById("biological");
+                biologicalList.innerHTML = '';  // Clear previous biological controls
+                data.biological_control.forEach(control => {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = control;
+                    biologicalList.appendChild(listItem);
+                });
+
+                // Update Chemical Control list
+                const chemicalList = document.getElementById("chemical");
+                chemicalList.innerHTML = '';  // Clear previous chemical controls
+                data.chemical_control.forEach(control => {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = control;
+                    chemicalList.appendChild(listItem);
+                });
+
+                // Update Mechanical Control list
+                const mechanicalList = document.getElementById("mechanical");
+                mechanicalList.innerHTML = '';  // Clear previous mechanical controls
+                data.mechanical_control.forEach(control => {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = control;
+                    mechanicalList.appendChild(listItem);
+                });
+
+                // Update Processed Image
+                if (data.processed_image) {
+                    document.getElementById("processedImage").src = `data:image/jpeg;base64,${data.processed_image}`;
+                    document.getElementById("processedImage").style.display = "block";
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        }
+    </script>
+</body>
+
+</html>
