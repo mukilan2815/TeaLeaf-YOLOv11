@@ -11,7 +11,9 @@ The YOLO-v11 API project is a web-based application built with FastAPI that leve
 ## Setup Instructions 🛠️
 1. **Clone the Repository:**
     - Clone the project's repository to your local machine 🌐.
-     
+      ```
+      git clone https://github.com/TitanNatesan/TeaLeaf-YOLOv11.git
+      ```     
 2. **Install Dependencies:**
     - Navigate to the project directory and run:
       ```
@@ -28,7 +30,7 @@ The YOLO-v11 API project is a web-based application built with FastAPI that leve
     - From the command-line interface, navigate to the project folder containing `yolo11.py` (typically under `mainSrc`).
     - Run the following command to start the FastAPI server:
       ```
-      uvicorn yolo11:app --host 0.0.0.0 --port 8000
+      uvicorn mainSrc.yolo11:app --host 0.0.0.0 --port 8000
       ```
     - The server will now be running and accessible at `http://0.0.0.0:8000`.
 
