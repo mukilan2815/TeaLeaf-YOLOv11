@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOLO-v11 API</title>
+    <style>
+        :root {
+            --bg-color: #d6ebff;
+            --text-color: #00386d;
+            --h1-color: #0b57bb;
+            --form-bg-color: #bfddfa;
+            --border-color: #7f8c8d;
+            --button-bg-color: #1070af;
+            --button-hover-bg-color: #1abc9c;
+            --response-heading-color: #002a35;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: var(--text-color);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--h1-color);
+        }
+
+        #image-form,
+        #response {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: var(--form-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        #response {
+            display: none;
+        }
+
+        #image-form label,
+        #image-form input,
+        #image-form button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        #image-form label {
+            font-size: 1rem;
+        }
+
+        #image-form input {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        #image-form button {
+            padding: 10px;
+            background-color: var(--button-bg-color);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #image-form button:hover {
+            background-color: var(--button-hover-bg-color);
+        }
+
+        #response h2,
+        #response h3 {
+            margin-top: 0;
+            color: var(--response-heading-color);
+        }
+
+        #response ul {
+            list-style: disc;
+            padding-left: 20px;
+        }
+
+        #response p {
+            margin-left: 20px;
+        }
+
+        #response-img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 10px auto;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>YOLO-v11 API</h1>
+    <form id="image-form" enctype="multipart/form-data">
+        <label for="image-input">Select an image file</label>
+        <input type="file" id="image-input" name="file" title="Select an image file">
+        <button type="submit">Submit</button>
+    </form>
+    <div id="response"></div>
+
+    <script>
+        const form = document.getElementById('image-form');
+        const responseDiv = document.getElementById('response');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fileInput = document.getElementById('image-input');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert('Please select an image file');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+            document.getElementById("response").innerHTML = "";
+            document.getElementById("response").style.display = "block";
+
+            try {
+                const response = await fetch('http://localhost:8000/yolo-v11/', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (!data) {
+                    responseDiv.innerHTML = 'No response data received';
+                    return;
+                }
+
+                let responseHtml = '';
+
+                if (data.prediction === "No predictions") {
+                    responseHtml = `
+                        <h2>🎯 ${data.prediction}</h2>
+                        <h3>🚀 Confidence: N/A</h3>
+                        <h3>🩺 Symptoms:</h3>
+                        <p>${data.symptoms}</p>
+                        <h3>🌱 Biological Control:</h3>
+                        <p>${data.biological_control}</p>
+                        <h3>🧪 Chemical Control:</h3>
+                        <p>${data.chemical_control}</p>
+                        <h3>🔧 Mechanical Control:</h3>
+                        <p>${data.mechanical_control}</p>
+                    `;
+                } else {
+                    const confidenceDisplay = data.confidence !== null
+                        ? `${(data.confidence.toFixed(2) * 100).toFixed(2)}%`
+                        : "N/A";
+
+                    responseHtml = `
+                        <h2>🎯 Prediction: ${data.prediction}</h2>
+                        <h3>🚀 Confidence: ${confidenceDisplay}</h3>
+                        <h3>🩺 Symptoms:</h3>
+                        <ul>
+                            ${Array.isArray(data.symptoms) ? data.symptoms.map(symptom => `<li>${symptom}</li>`).join('') : `<li>${data.symptoms}</li>`}
+                        </ul>
+                        <h3>🌱 Biological Control:</h3>
+                        <ul>
+                            ${Array.isArray(data.biological_control) ? data.biological_control.map(control => `<li>${control}</li>`).join('') : `<li>${data.biological_control}</li>`}
+                        </ul>
+                        <h3>🧪 Chemical Control:</h3>
+                        <ul>
+                            ${Array.isArray(data.chemical_control) ? data.chemical_control.map(control => `<li>${control}</li>`).join('') : `<li>${data.chemical_control}</li>`}
+                        </ul>
+                        <h3>🔧 Mechanical Control:</h3>
+                        <ul>
+                            ${Array.isArray(data.mechanical_control) ? data.mechanical_control.map(control => `<li>${control}</li>`).join('') : `<li>${data.mechanical_control}</li>`}
+                        </ul>
+                        ${data.processed_image ? `<h3>🖼️ Processed Image:</h3>
+                        <img src="data:image/jpeg;base64,${data.processed_image}" id="response-img" />` : ''}
+                    `;
+                }
+                responseDiv.innerHTML = responseHtml;
+            } catch (error) {
+                responseDiv.innerHTML = `Error: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+
+</html>
