@@ -21,6 +21,7 @@ app.add_middleware(
 
 class_names = ["rsc", "looper", "thrips", "jassid", "rsm", "tmb", "healthy"]
 
+# Pest recommendations
 pest_recommendations = {
     "tmb": {
         "name": "Tea Mosquito Bug (TMB)",
@@ -157,102 +158,92 @@ async def predict(file: UploadFile = File(...)):
         image_cv = np.array(image)
         image_cv = cv2.cvtColor(image_cv, cv2.COLOR_RGB2BGR)
 
-        results = model(image)
-        prediction_label = "No predictions"
-        confidence_score = 0.0
-        bbox_coords = []
-        found_prediction = False
+        results = model(image)[0]  # Get first result from YOLO inference
+        predictions = []
 
-        for result in results:
-            if result.boxes:
-                for i, box in enumerate(result.boxes.xyxy):
-                    label_index = int(result.boxes.cls[i])
-                    confidence_score = float(result.boxes.conf[i])
-                    prediction_label = class_names[label_index]
-                    found_prediction = True
+        if results.boxes is not None and len(results.boxes.xyxy) > 0:
+            for i in range(len(results.boxes.xyxy)):
+                box = results.boxes.xyxy[i]
+                label_index = int(results.boxes.cls[i])
+                confidence_score = float(results.boxes.conf[i])
+                prediction_label = class_names[label_index]
 
-                    # Bounding box
-                    x1, y1, x2, y2 = map(int, box)
-                    bbox_coords = [x1, y1, x2, y2]
-                    cv2.rectangle(image_cv, (x1, y1), (x2, y2), (0, 255, 0), 4)
+                # Bounding box
+                x1, y1, x2, y2 = map(int, box)
+                bbox_coords = [x1, y1, x2, y2]
+                cv2.rectangle(image_cv, (x1, y1), (x2, y2), (0, 255, 0), 4)
 
-                    # Label
-                    label_text = f"{prediction_label} ({confidence_score:.2f})"
-                    cv2.putText(
-                        image_cv,
-                        label_text,
-                        (x1, y1 - 10),
-                        cv2.FONT_HERSHEY_SIMPLEX,
-                        4,  # increased font scale for a bigger label
-                        (0, 255, 0),
-                        10,  # increased thickness for a bolder font weight
+                # Label
+                label_text = f"{prediction_label} ({confidence_score:.2f})"
+                cv2.putText(
+                    image_cv,
+                    label_text,
+                    (x1, y1 - 10),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    1,
+                    (0, 255, 0),
+                    2,
+                )
+
+                # Process segmentation mask if available
+                if results.masks is not None and results.masks.xy:
+                    mask = np.zeros(image_cv.shape[:2], dtype=np.uint8)
+                    cv2.fillPoly(
+                        mask, [np.array(results.masks.xy[i], dtype=np.int32)], 255
                     )
 
-                    # Process segmentation mask if available
-                    if result.masks and result.masks.xy:
-                        mask = np.zeros(image_cv.shape[:2], dtype=np.uint8)
-                        cv2.fillPoly(
-                            mask, [np.array(result.masks.xy[i], dtype=np.int32)], 255
-                        )
+                    # Create colored mask overlay
+                    colored_mask = np.zeros_like(image_cv, dtype=np.uint8)
+                    colored_mask[:, :, 0] = mask
+                    image_cv = cv2.addWeighted(image_cv, 1, colored_mask, 0.5, 0)
 
-                        # Create colored mask overlay (semi-transparent blue)
-                        colored_mask = np.zeros_like(image_cv, dtype=np.uint8)
-                        colored_mask[:, :, 0] = mask  # Blue channel
+                # Fetch pest recommendations
+                recommendation = pest_recommendations.get(prediction_label, {})
 
-                        # Blend mask with image
-                        alpha = 0.5
-                        image_cv = cv2.addWeighted(image_cv, 1, colored_mask, alpha, 0)
+                predictions.append(
+                    {
+                        "prediction": prediction_label,
+                        "confidence": confidence_score,
+                        "bounding_box": bbox_coords,
+                        "symptoms": (
+                            recommendation.get("symptoms", ["No symptoms available."])
+                            if recommendation
+                            else ["No symptoms available."]
+                        ),
+                        "biological_control": (
+                            recommendation.get("control_methods", {}).get(
+                                "biological", ["No biological control available."]
+                            )
+                            if recommendation
+                            else ["No biological control available."]
+                        ),
+                        "chemical_control": (
+                            recommendation.get("control_methods", {}).get(
+                                "chemical", ["No chemical control available."]
+                            )
+                            if recommendation
+                            else ["No chemical control available."]
+                        ),
+                        "mechanical_control": (
+                            recommendation.get("control_methods", {}).get(
+                                "mechanical", ["No mechanical control available."]
+                            )
+                            if recommendation
+                            else ["No mechanical control available."]
+                        ),
+                    }
+                )
 
-                    break  # Process only the first detected object
-
-            if found_prediction:
-                break
-
-        if not found_prediction:
-            return {
-                "prediction": "No predictions",
-                "confidence": None,
-                "bounding_box": None,
-                "symptoms": "No symptoms available.",
-                "biological_control": "No biological control available.",
-                "chemical_control": "No chemical control available.",
-                "mechanical_control": "No mechanical control available.",
-                "processed_image": None,
-            }
+        if not predictions:
+            return {"message": "No predictions found", "predictions": []}
 
         _, buffer = cv2.imencode(".jpg", image_cv)
         encoded_image = base64.b64encode(buffer).decode("utf-8")
 
-        # Fetch pest recommendations
-        recommendation = pest_recommendations.get(prediction_label, None)
-
         return {
-            "prediction": prediction_label,
-            "confidence": confidence_score,
-            "bounding_box": bbox_coords,
-            "symptoms": (
-                recommendation["symptoms"]
-                if recommendation
-                else "No symptoms available."
-            ),
-            "biological_control": (
-                recommendation["control_methods"]["biological"]
-                if recommendation
-                else "No biological control available."
-            ),
-            "chemical_control": (
-                recommendation["control_methods"]["chemical"]
-                if recommendation
-                else "No chemical control available."
-            ),
-            "mechanical_control": (
-                recommendation["control_methods"]["mechanical"]
-                if recommendation
-                else "No mechanical control available."
-            ),
-            "processed_image": encoded_image,  # Image with bounding box and segmentation mask
+            "predictions": predictions,
+            "processed_image": encoded_image,
         }
-
     except Exception as e:
         return {"error": str(e)}
 

@@ -45,9 +45,6 @@
                     body: formData,
                 });
 
-                console.log('Response status:', response.status);
-                console.log('Response headers:', response.headers);
-
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -55,34 +52,32 @@
                 const data = await response.json();
                 console.log('API response:', data);
 
-                if (!data) {
-                    console.error('No response data received');
-                    responseDiv.innerHTML = 'No response data received';
+                if (!data || !data.predictions || data.predictions.length === 0) {
+                    responseDiv.innerHTML = '<h2>No detections found</h2>';
                     return;
                 }
 
-                const responseHtml = `
-                    <h2>Prediction: ${data.prediction}</h2>
-                    <h3>Confidence Level: ${data.confidence.toFixed(2) * 100}%</h3>
-                    <h3>Symptoms:</h3>
-                    <ul>
-                        ${data.symptoms.map((symptom) => `<li>${symptom}</li>`).join('')}
-                    </ul>
-                    <h3>Biological Control:</h3>
-                    <ul>
-                        ${data.biological_control.map((control) => `<li>${control}</li>`).join('')}
-                    </ul>
-                    <h3>Chemical Control:</h3>
-                    <ul>
-                        ${data.chemical_control.map((control) => `<li>${control}</li>`).join('')}
-                    </ul>
-                    <h3>Mechanical Control:</h3>
-                    <ul>
-                        ${data.mechanical_control.map((control) => `<li>${control}</li>`).join('')}
-                    </ul>
-                    <h3>Processed Image:</h3>
-                    <img src="data:image/jpeg;base64,${data.processed_image}" id="response-img" />
-                `;
+                let responseHtml = '<h2>Detections:</h2>';
+                data.predictions.forEach((prediction, index) => {
+                    responseHtml += `
+                        <div>
+                            <h3>Prediction ${index + 1}: ${prediction.label}</h3>
+                            <p>Confidence Level: ${(prediction.confidence * 100).toFixed(2)}%</p>
+                            <h4>Symptoms:</h4>
+                            <ul>${prediction.symptoms.map(s => `<li>${s}</li>`).join('')}</ul>
+                            <h4>Biological Control:</h4>
+                            <ul>${prediction.biological_control.map(b => `<li>${b}</li>`).join('')}</ul>
+                            <h4>Chemical Control:</h4>
+                            <ul>${prediction.chemical_control.map(c => `<li>${c}</li>`).join('')}</ul>
+                            <h4>Mechanical Control:</h4>
+                            <ul>${prediction.mechanical_control.map(m => `<li>${m}</li>`).join('')}</ul>
+                        </div>
+                        <hr>
+                    `;
+                });
+
+                responseHtml += `<h3>Processed Image:</h3>
+                                 <img src="data:image/jpeg;base64,${data.processed_image}" id="response-img" />`;
                 responseDiv.innerHTML = responseHtml;
             } catch (error) {
                 console.error('Error:', error);
