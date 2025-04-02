@@ -5,120 +5,98 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YOLO-v11 API</title>
-    <style>
-        :root {
-            --bg-color: #d6ebff;
-            --text-color: #00386d;
-            --h1-color: #0b57bb;
-            --form-bg-color: #bfddfa;
-            --border-color: #7f8c8d;
-            --button-bg-color: #1070af;
-            --button-hover-bg-color: #1abc9c;
-            --response-heading-color: #002a35;
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
         }
-
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 20px;
-            color: var(--text-color);
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: var(--h1-color);
-        }
-
-        #image-form,
-        #response {
-            max-width: 500px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: var(--form-bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-        }
-
-        #response {
-            display: none;
-        }
-
-        #image-form label,
-        #image-form input,
-        #image-form button {
-            display: block;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-
-        #image-form label {
-            font-size: 1rem;
-        }
-
-        #image-form input {
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-        }
-
-        #image-form button {
-            padding: 10px;
-            background-color: var(--button-bg-color);
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        #image-form button:hover {
-            background-color: var(--button-hover-bg-color);
-        }
-
-        #response h2,
-        #response h3 {
-            margin-top: 0;
-            color: var(--response-heading-color);
-        }
-
-        #response ul {
-            list-style: disc;
-            padding-left: 20px;
-        }
-
-        #response p {
-            margin-left: 20px;
-        }
-
-        #response-img {
-            display: block;
-            max-width: 100%;
-            height: auto;
-            margin: 10px auto;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-        }
-    </style>
+    </script>
 </head>
 
-<body>
-    <h1>YOLO-v11 API</h1>
-    <form id="image-form" enctype="multipart/form-data">
-        <label for="image-input">Select an image file</label>
-        <input type="file" id="image-input" name="file" title="Select an image file">
-        <button type="submit">Submit</button>
-    </form>
-    <div id="response"></div>
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 text-slate-800 font-sans">
+    <div class="container mx-auto px-4 py-8 max-w-5xl">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-blue-700 mb-2">YOLO-v11 API</h1>
+            <p class="text-slate-500">Advanced Image Analysis & Disease Detection</p>
+        </header>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold text-slate-700 mb-4">Upload Image</h2>
+                    <form id="image-form" class="space-y-4" enctype="multipart/form-data">
+                        <div class="space-y-2">
+                            <label for="image-input" class="block text-sm font-medium text-slate-600">Select an image
+                                file</label>
+                            <div
+                                class="relative border-2 border-dashed border-slate-300 rounded-lg p-6 text-center hover:border-blue-500 transition-colors">
+                                <input type="file" id="image-input" name="file" title="Select an image file"
+                                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                                <div class="space-y-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-slate-400"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    <p class="text-sm text-slate-500">Drag and drop an image, or <span
+                                            class="text-blue-600">browse</span></p>
+                                    <p class="text-xs text-slate-400">JPG, JPEG, PNG files supported</p>
+                                </div>
+                                <p id="file-name" class="mt-2 text-sm text-slate-600 hidden"></p>
+                            </div>
+                        </div>
+                        <button type="submit"
+                            class="w-full py-2.5 px-4 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
+                            Analyze Image
+                        </button>
+                    </form>
+                </div>
+                <div id="loading" class="hidden p-6 border-t border-slate-100">
+                    <div class="flex items-center justify-center space-x-2">
+                        <div class="w-4 h-4 rounded-full animate-pulse bg-blue-600"></div>
+                        <div class="w-4 h-4 rounded-full animate-pulse bg-blue-600" style="animation-delay: 0.2s"></div>
+                        <div class="w-4 h-4 rounded-full animate-pulse bg-blue-600" style="animation-delay: 0.4s"></div>
+                        <span class="text-sm font-medium text-slate-500 ml-2">Analyzing...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="response" class="hidden bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold text-slate-700 mb-4">Analysis Results</h2>
+                    <div id="response-content" class="space-y-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         const form = document.getElementById('image-form');
         const responseDiv = document.getElementById('response');
+        const fileInput = document.getElementById('image-input');
+        const fileName = document.getElementById('file-name');
+        const loading = document.getElementById('loading');
+
+        fileInput.addEventListener('change', (e) => {
+            if (fileInput.files.length > 0) {
+                fileName.textContent = fileInput.files[0].name;
+                fileName.classList.remove('hidden');
+            } else {
+                fileName.classList.add('hidden');
+            }
+        });
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const fileInput = document.getElementById('image-input');
             const file = fileInput.files[0];
 
             if (!file) {
@@ -128,8 +106,10 @@
 
             const formData = new FormData();
             formData.append('file', file);
-            document.getElementById("response").innerHTML = "";
-            document.getElementById("response").style.display = "block";
+
+            // Show loading indicator
+            loading.classList.remove('hidden');
+            responseDiv.classList.add('hidden');
 
             try {
                 const response = await fetch('http://localhost:8000/yolo-v11/', {
@@ -143,8 +123,11 @@
 
                 const data = await response.json();
 
+                // Hide loading indicator
+                loading.classList.add('hidden');
+
                 if (!data) {
-                    responseDiv.innerHTML = 'No response data received';
+                    showError('No response data received');
                     return;
                 }
 
@@ -152,16 +135,61 @@
 
                 if (data.prediction === "No predictions") {
                     responseHtml = `
-                        <h2>🎯 ${data.prediction}</h2>
-                        <h3>🚀 Confidence: N/A</h3>
-                        <h3>🩺 Symptoms:</h3>
-                        <p>${data.symptoms}</p>
-                        <h3>🌱 Biological Control:</h3>
-                        <p>${data.biological_control}</p>
-                        <h3>🧪 Chemical Control:</h3>
-                        <p>${data.chemical_control}</p>
-                        <h3>🔧 Mechanical Control:</h3>
-                        <p>${data.mechanical_control}</p>
+                        <div class="bg-slate-50 rounded-lg p-4 mb-4">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 bg-slate-200 rounded-full p-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <h3 class="text-lg font-medium text-slate-800">No predictions detected</h3>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <h3 class="text-md font-semibold text-slate-700 mb-2 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    Symptoms
+                                </h3>
+                                <p class="text-slate-600 pl-7">${data.symptoms || 'Not applicable'}</p>
+                            </div>
+                            
+                            <div>
+                                <h3 class="text-md font-semibold text-slate-700 mb-2 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    Biological Control
+                                </h3>
+                                <p class="text-slate-600 pl-7">${data.biological_control || 'Not applicable'}</p>
+                            </div>
+                            
+                            <div>
+                                <h3 class="text-md font-semibold text-slate-700 mb-2 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                                    </svg>
+                                    Chemical Control
+                                </h3>
+                                <p class="text-slate-600 pl-7">${data.chemical_control || 'Not applicable'}</p>
+                            </div>
+                            
+                            <div>
+                                <h3 class="text-md font-semibold text-slate-700 mb-2 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    Mechanical Control
+                                </h3>
+                                <p class="text-slate-600 pl-7">${data.mechanical_control || 'Not applicable'}</p>
+                            </div>
+                        </div>
                     `;
                 } else {
                     const confidenceDisplay = data.confidence !== null
@@ -169,33 +197,120 @@
                         : "N/A";
 
                     responseHtml = `
-                        <h2>🎯 Prediction: ${data.prediction}</h2>
-                        <h3>🚀 Confidence: ${confidenceDisplay}</h3>
-                        <h3>🩺 Symptoms:</h3>
-                        <ul>
-                            ${Array.isArray(data.symptoms) ? data.symptoms.map(symptom => `<li>${symptom}</li>`).join('') : `<li>${data.symptoms}</li>`}
-                        </ul>
-                        <h3>🌱 Biological Control:</h3>
-                        <ul>
-                            ${Array.isArray(data.biological_control) ? data.biological_control.map(control => `<li>${control}</li>`).join('') : `<li>${data.biological_control}</li>`}
-                        </ul>
-                        <h3>🧪 Chemical Control:</h3>
-                        <ul>
-                            ${Array.isArray(data.chemical_control) ? data.chemical_control.map(control => `<li>${control}</li>`).join('') : `<li>${data.chemical_control}</li>`}
-                        </ul>
-                        <h3>🔧 Mechanical Control:</h3>
-                        <ul>
-                            ${Array.isArray(data.mechanical_control) ? data.mechanical_control.map(control => `<li>${control}</li>`).join('') : `<li>${data.mechanical_control}</li>`}
-                        </ul>
-                        ${data.processed_image ? `<h3>🖼️ Processed Image:</h3>
-                        <img src="data:image/jpeg;base64,${data.processed_image}" id="response-img" />` : ''}
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 bg-blue-100 rounded-full p-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <h3 class="text-lg font-medium text-blue-800">Prediction: ${data.prediction}</h3>
+                                    <div class="mt-1 flex items-center">
+                                        <div class="w-full bg-slate-200 rounded-full h-2.5">
+                                            <div class="bg-blue-600 h-2.5 rounded-full" style="width: ${confidenceDisplay}"></div>
+                                        </div>
+                                        <span class="ml-2 text-sm font-medium text-blue-600">${confidenceDisplay}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-5">
+                            <div>
+                                <h3 class="text-md font-semibold text-slate-700 mb-2 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                    </svg>
+                                    Symptoms
+                                </h3>
+                                <ul class="list-disc pl-10 text-slate-600 space-y-1">
+                                    ${Array.isArray(data.symptoms) ? data.symptoms.map(symptom => `<li>${symptom}</li>`).join('') : `<li>${data.symptoms}</li>`}
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h3 class="text-md font-semibold text-slate-700 mb-2 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
+                                    </svg>
+                                    Biological Control
+                                </h3>
+                                <ul class="list-disc pl-10 text-slate-600 space-y-1">
+                                    ${Array.isArray(data.biological_control) ? data.biological_control.map(control => `<li>${control}</li>`).join('') : `<li>${data.biological_control}</li>`}
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h3 class="text-md font-semibold text-slate-700 mb-2 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                                    </svg>
+                                    Chemical Control
+                                </h3>
+                                <ul class="list-disc pl-10 text-slate-600 space-y-1">
+                                    ${Array.isArray(data.chemical_control) ? data.chemical_control.map(control => `<li>${control}</li>`).join('') : `<li>${data.chemical_control}</li>`}
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h3 class="text-md font-semibold text-slate-700 mb-2 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    Mechanical Control
+                                </h3>
+                                <ul class="list-disc pl-10 text-slate-600 space-y-1">
+                                    ${Array.isArray(data.mechanical_control) ? data.mechanical_control.map(control => `<li>${control}</li>`).join('') : `<li>${data.mechanical_control}</li>`}
+                                </ul>
+                            </div>
+
+                            ${data.processed_image ? `
+                            <div>
+                                <h3 class="text-md font-semibold text-slate-700 mb-2 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    Processed Image
+                                </h3>
+                                <div class="mt-2 bg-slate-50 p-2 rounded-lg border border-slate-200">
+                                    <img src="data:image/jpeg;base64,${data.processed_image}" class="max-w-full h-auto mx-auto rounded-md" alt="Processed image" />
+                                </div>
+                            </div>
+                            ` : ''}
+                        </div>
                     `;
                 }
-                responseDiv.innerHTML = responseHtml;
+
+                document.getElementById('response-content').innerHTML = responseHtml;
+                responseDiv.classList.remove('hidden');
             } catch (error) {
-                responseDiv.innerHTML = `Error: ${error.message}`;
+                loading.classList.add('hidden');
+                showError(error.message);
             }
         });
+
+        function showError(message) {
+            const responseContent = document.getElementById('response-content');
+            responseContent.innerHTML = `
+                <div class="bg-red-50 border-l-4 border-red-500 p-4">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-red-700">
+                                ${message}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            responseDiv.classList.remove('hidden');
+        }
     </script>
 </body>
 
