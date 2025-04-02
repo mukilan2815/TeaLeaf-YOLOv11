@@ -30,12 +30,12 @@ The YOLO-v11 API project is a web-based application built with FastAPI that leve
     - From the command-line interface, navigate to the project folder containing `yolo11.py` (typically under `mainSrc`).
     - Run the following command to start the FastAPI server:
       ```
-      uvicorn mainSrc.yolo11:app --host 0.0.0.0 --port 8000
+      uvicorn src.yolo11:app --host 0.0.0.0 --port 8000
       ```
     - The server will now be running and accessible at `http://0.0.0.0:8000`.
 
 2. **Accessing the API:**
-    - Use the provided `index.html` in the `mainSrc` or `test` folder to test the API via a web browser.
+    - Use the provided `index.html` in the `src` or `test` folder to test the API via a web browser.
     - Alternatively, use an API client like Postman or curl to send a POST request to:
       ```
       http://localhost:8000/yolo-v11/
