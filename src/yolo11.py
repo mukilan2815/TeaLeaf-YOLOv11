@@ -11,7 +11,7 @@ from utils.rec import pest_recommendations
 
 app = FastAPI()
 model = YOLO(r"utils/yolov11.pt")  # Load YOLOv11 model
-
+print("Model loaded successfully!")  # Add this line
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
