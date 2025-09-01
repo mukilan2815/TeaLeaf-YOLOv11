@@ -1,127 +1,207 @@
 # Pest recommendations
 pest_recommendations = {
-    "tmb": {
-        "name": "Tea Mosquito Bug (TMB)",
+    # Looper Caterpillar
+    "Looper_Mild": {
+        "name": "Looper Caterpillar (Mild)",
         "symptoms": [
-            "Brown or black feeding spots on shoots.",
-            "Wilted or damaged shoots due to nymph feeding.",
-            "Presence of eggs and early nymph stages inserted in shoots."
+            "Initial signs of defoliation on a few leaves.",
+            "Occasional caterpillars visible on leaves.",
+            "Minor feeding damage on leaf edges."
         ],
         "control_methods": {
-            "biological": [
-                "Encourage natural predators like Sycanus collaris (Reduviid bug), Chrysoperla carnea, Mallada boninensis (Lacewings), Oxyopes spp. (Spiders), and praying mantis."
-            ],
-            "chemical": [
-                "Use systemic insecticides alternately: Thiamethoxam 25 WG, Clothianidin 50 WDG, Thiacloprid 21.7% SC, and Neem extract (Azadirachtin 5% W/W)."
-            ],
-            "mechanical": [
-                "Regularly remove infested shoots during plucking.",
-                "Maintain a close plucking schedule to remove eggs and nymphs.",
-                "Remove alternate host plants near plantations.",
-                "Prune and skiff bushes during cold weather."
-            ]
+            "biological": ["Encourage natural enemies like Cotesia ruficrus (Parasitoid wasp), Sycanus collaris (Predatory bug), and spiders."],
+            "chemical": ["Apply Emamectin Benzoate 5% SG if needed."],
+            "mechanical": ["Manual removal of visible caterpillars.", "Light scrapping of shade tree bark to destroy eggs."]
         }
     },
-    "rsm": {
-        "name": "Red Spider Mite (RSM)",
+    "Looper_Moderate": {
+        "name": "Looper Caterpillar (Moderate)",
         "symptoms": [
-            "Presence of red spots and webbing on the underside of leaves.",
-            "Leaves turn bronze or rusty red and fall off.",
-            "Infestation is more severe in unshaded, waterlogged areas."
+            "Noticeable defoliation on multiple bushes.",
+            "Caterpillars visible hanging from leaves.",
+            "Visible feeding damage on leaves."
         ],
         "control_methods": {
-            "biological": [
-                "Conserve predatory insects and mites like Phytoseiid mites (Amblyseius sp., Cunaxa sp.), Ladybird beetles (Stethorus sp., Scymnus sp.), and Lacewings (Mallada sp., Chrysopa sp.)."
-            ],
-            "chemical": [
-                "Use acaricides alternately: Propargite 57 EC, Fenazaquin 10 EC, Spiromesifen 240 SC, and Hexythiazox 5.45 EC."
-            ],
-            "mechanical": [
-                "Maintain shade trees at recommended spacing to reduce mite buildup.",
-                "Remove alternate host plants near plantations.",
-                "Improve drainage to prevent waterlogging."
-            ]
+            "biological": ["Encourage natural enemies and consider releasing beneficial insects."],
+            "chemical": ["Apply Quinalphos 25 EC or Deltamethrin 10 EC."],
+            "mechanical": ["Manual removal of caterpillars and use of light traps.", "Prune affected branches."]
         }
     },
-    "rsc": {
-        "name": "Red Slug Caterpillar (RSC)",
+    "Lopper_Severe": {
+        "name": "Looper Caterpillar (Severe)",
         "symptoms": [
-            "Feeding damage on young leaves.",
-            "Defoliation of bushes during severe infestations.",
-            "Presence of caterpillars with a distinctive red body and slug-like appearance."
+            "Heavy defoliation across the plantation.",
+            "Large numbers of caterpillars present.",
+            "Severe feeding damage affecting plant health."
         ],
         "control_methods": {
-            "biological": [
-                "Encourage natural enemies like birds, parasitic wasps, and pathogenic fungi and bacteria in the soil."
-            ],
-            "chemical": [
-                "Apply insecticides like Emamectin Benzoate 5% SG and Flubendiamide 20% WG."
-            ],
-            "mechanical": [
-                "Manual collection and destruction of caterpillars.",
-                "Prune and clean bushes to remove pupae from crevices."
-            ]
+            "biological": ["Immediate release of parasitoid wasps and other natural enemies."],
+            "chemical": ["Immediate application of recommended insecticides in rotation.", "Consider systemic insecticides for better control."],
+            "mechanical": ["Intensive manual removal.", "Use of multiple light traps.", "Pruning of heavily infested areas."]
         }
     },
-    "looper": {
-        "name": "Looper Caterpillar",
+
+    # Red Slug Caterpillar (RSC)
+    "RSC_Mild": {
+        "name": "Red Slug Caterpillar (Mild)",
         "symptoms": [
-            "Defoliation of bushes due to feeding by caterpillars.",
-            "Caterpillars are visible hanging from leaves using silken threads.",
-            "Eggs laid in clusters on cracks of shade tree bark."
+            "Minor feeding damage on young leaves.",
+            "Few caterpillars visible on plants.",
+            "Small irregular holes in leaves."
         ],
         "control_methods": {
-            "biological": [
-                "Encourage natural enemies like Cotesia ruficrus (Parasitoid wasp), Sycanus collaris (Predatory bug), spiders (Oxyopes shweta), and entomopathogenic nematodes (Steinernema sp., Heterorhabditis sp.)."
-            ],
-            "chemical": [
-                "Apply insecticides alternately: Emamectin Benzoate 5% SG, Quinalphos 25 EC, and Deltamethrin 10 EC."
-            ],
-            "mechanical": [
-                "Manual removal of caterpillars, moths, and chrysalids.",
-                "Light scrapping of shade tree bark to destroy eggs.",
-                "Use light traps during the evening to attract and kill moths."
-            ]
+            "biological": ["Encourage natural enemies like birds and parasitic wasps."],
+            "chemical": ["Spot treatment with Emamectin Benzoate 5% SG if needed."],
+            "mechanical": ["Handpick and destroy visible caterpillars."]
         }
     },
-    "thrips": {
-        "name": "Thrips",
+    "RSC_Moderate": {
+        "name": "Red Slug Caterpillar (Moderate)",
         "symptoms": [
-            "Leaves show silvering and curling due to feeding.",
-            "Leaf tips may turn yellowish or brown.",
-            "Both adult and larval thrips can be found on leaves."
+            "Noticeable feeding damage on multiple plants.",
+            "Visible defoliation on some bushes.",
+            "Presence of multiple caterpillars."
         ],
         "control_methods": {
-            "biological": [
-                "Encourage natural predators like predatory thrips (Aeolothrips intermedius, Mymarothrips garuda), spiders, and dragonflies."
-            ],
-            "chemical": [
-                "Use systemic insecticides alternately: Thiamethoxam 25 WG, Clothianidin 50 WDG, and Bifenthrin 8 SC."
-            ],
-            "mechanical": [
-                "Use yellow sticky traps (45 cm wide) to attract and trap thrips.",
-                "Maintain a shade level of 60% in the plantation."
-            ]
+            "biological": ["Enhance habitat for natural enemies."],
+            "chemical": ["Apply Flubendiamide 20% WG.", "Consider targeted spraying."],
+            "mechanical": ["Regular manual collection.", "Prune affected areas."]
         }
     },
-    "jassid": {
-        "name": "Jassid",
+    "RSC_Severe": {
+        "name": "Red Slug Caterpillar (Severe)",
         "symptoms": [
-            "Yellowing and curling of leaf edges.",
-            "Leaves show brown spots and withering in severe infestations.",
-            "Both adults and nymphs feed on the underside of leaves."
+            "Heavy defoliation across the plantation.",
+            "Large numbers of caterpillars present.",
+            "Severe damage to young shoots and leaves."
         ],
         "control_methods": {
-            "biological": [
-                "Conserve natural predators like ladybeetles (Stethorus sp., Scymnus sp.), predatory bugs (Anthocoris sp., Orius sp.), and lacewings (Chrysopa sp., Chrysoperla sp.)."
-            ],
-            "chemical": [
-                "Use systemic insecticides alternately: Thiamethoxam 25 WG, Clothianidin 50 WDG, and Spirotetramat 15.31% OD."
-            ],
-            "mechanical": [
-                "Use light traps and yellow sticky traps to monitor and control populations.",
-                "Caustic wash the trunk and stir soil around the collar region to kill pupae."
-            ]
+            "biological": ["Immediate release of biological control agents."],
+            "chemical": ["Immediate application of recommended insecticides.", "Consider systemic treatments."],
+            "mechanical": ["Intensive manual removal.", "Prune and destroy heavily infested areas."]
+        }
+    },
+
+    # Red Spider Mite (RSM)
+    "RSM_Minor": {
+        "name": "Red Spider Mite (Minor)",
+        "symptoms": [
+            "Small red spots on the underside of leaves.",
+            "Slight yellowing of leaves.",
+            "Minor webbing visible under leaves."
+        ],
+        "control_methods": {
+            "biological": ["Encourage predatory mites and insects."],
+            "chemical": ["Spot treatment with mild miticides if needed."],
+            "mechanical": ["Increase humidity through light misting.", "Remove heavily infested leaves."]
+        }
+    },
+    "RSM_Moderate": {
+        "name": "Red Spider Mite (Moderate)",
+        "symptoms": [
+            "Visible webbing on multiple leaves.",
+            "Leaves showing bronze discoloration.",
+            "Moderate leaf drop."
+        ],
+        "control_methods": {
+            "biological": ["Release Phytoseiid mites."],
+            "chemical": ["Apply Propargite 57 EC or Fenazaquin 10 EC."],
+            "mechanical": ["Prune affected areas.", "Improve air circulation."]
+        }
+    },
+    "RSM_Severe": {
+        "name": "Red Spider Mite (Severe)",
+        "symptoms": [
+            "Extensive webbing covering plants.",
+            "Severe bronzing and leaf drop.",
+            "Stunted plant growth."
+        ],
+        "control_methods": {
+            "biological": ["Immediate release of predatory mites."],
+            "chemical": ["Apply Spiromesifen 240 SC or Hexythiazox 5.45 EC.", "Consider systemic miticides."],
+            "mechanical": ["Prune and destroy heavily infested areas.", "Improve growing conditions."]
+        }
+    },
+
+    # Tea Mosquito Bug (TMB)
+    "TMB_Mild": {
+        "name": "Tea Mosquito Bug (Mild)",
+        "symptoms": [
+            "Few brown or black feeding spots on shoots.",
+            "Minor wilting of some shoots.",
+            "Occasional presence of bugs."
+        ],
+        "control_methods": {
+            "biological": ["Encourage natural predators like reduviid bugs and lacewings."],
+            "chemical": ["Spot treatment with neem-based products if needed."],
+            "mechanical": ["Remove and destroy infested shoots."]
+        }
+    },
+    "TMB_Moderate": {
+        "name": "Tea Mosquito Bug (Moderate)",
+        "symptoms": [
+            "Multiple feeding spots on shoots.",
+            "Noticeable wilting of several shoots.",
+            "Visible presence of bugs and eggs."
+        ],
+        "control_methods": {
+            "biological": ["Enhance habitat for natural enemies."],
+            "chemical": ["Apply Thiamethoxam 25 WG or Clothianidin 50 WDG."],
+            "mechanical": ["Regular removal of infested shoots.", "Maintain close plucking schedule."]
+        }
+    },
+    "TMB_Severe": {
+        "name": "Tea Mosquito Bug (Severe)",
+        "symptoms": [
+            "Extensive damage across the plantation.",
+            "Severe wilting and dieback of shoots.",
+            "Heavy infestation of bugs and eggs."
+        ],
+        "control_methods": {
+            "biological": ["Immediate release of biological control agents."],
+            "chemical": ["Immediate application of systemic insecticides.", "Rotate with different chemical groups."],
+            "mechanical": ["Intensive removal of infested material.", "Prune heavily affected areas."]
+        }
+    },
+
+    # Thrips
+    "Thrips_Mild": {
+        "name": "Thrips (Mild)",
+        "symptoms": [
+            "Slight silvering on some leaves.",
+            "Minor curling of leaf tips.",
+            "Few thrips visible on leaves."
+        ],
+        "control_methods": {
+            "biological": ["Encourage natural predators like predatory thrips and spiders."],
+            "chemical": ["Spot treatment if needed."],
+            "mechanical": ["Use yellow sticky traps for monitoring."]
+        }
+    },
+    "Thrips_Moderate": {
+        "name": "Thrips (Moderate)",
+        "symptoms": [
+            "Noticeable silvering on multiple leaves.",
+            "Leaf tips turning brown.",
+            "Visible thrips on plants."
+        ],
+        "control_methods": {
+            "biological": ["Release predatory thrips and other natural enemies."],
+            "chemical": ["Apply Thiamethoxam 25 WG or Clothianidin 50 WDG."],
+            "mechanical": ["Increase use of yellow sticky traps.", "Prune affected areas."]
+        }
+    },
+    "Thrips_Severe": {
+        "name": "Thrips (Severe)",
+        "symptoms": [
+            "Extensive silvering and damage to leaves.",
+            "Severe curling and browning of leaves.",
+            "Heavy thrips infestation."
+        ],
+        "control_methods": {
+            "biological": ["Immediate release of biological control agents."],
+            "chemical": ["Apply Bifenthrin 8 SC or other recommended insecticides.", "Consider systemic treatments."],
+            "mechanical": ["Remove and destroy heavily infested plants.", "Use multiple control methods together."]
         }
     }
 }

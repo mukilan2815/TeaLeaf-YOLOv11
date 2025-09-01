@@ -3,14 +3,14 @@ import base64
 import uvicorn
 import numpy as np
 import cv2
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, Request
 from fastapi.middleware.cors import CORSMiddleware
 from ultralytics import YOLO
 from PIL import Image
 from utils.rec import pest_recommendations
 
 app = FastAPI()
-model = YOLO(r"utils/yolov11.pt")  # Load YOLOv11 model
+model = YOLO(r"utils/master.pt")  # Load YOLOv11 model
 print("Model loaded successfully!")  # Add this line
 app.add_middleware(
     CORSMiddleware,
@@ -18,9 +18,39 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"]
 )
 
-class_names = ["rsc", "looper", "thrips", "jassid", "rsm", "tmb", "healthy"]
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    print(f"Incoming request: {request.method} {request.url}")
+    try:
+        response = await call_next(request)
+        print(f"Response status: {response.status_code}")
+        return response
+    except Exception as e:
+        print(f"Error processing request: {str(e)}")
+        raise
+
+class_names = [
+"Looper_Mild",
+"Looper_Moderate",
+"Lopper_Severe",
+"RSC_Mild",
+"RSC_Moderate",
+"RSC_Severe",
+"RSM_Minor",
+"RSM_Moderate",
+"RSM_Severe",
+"TGL_Mild",
+"TGL_Moderate",
+"TGL_Severe",
+"TMB_Mild",
+"TMB_Moderate",
+"TMB_Severe",
+"Thrips_Mild",
+"Thrips_Moderate",
+"Thrips_Severe"]
 
 
 @app.post("/yolo-v11/")
