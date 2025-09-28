@@ -10,7 +10,7 @@ from PIL import Image
 from utils.rec import pest_recommendations
 
 app = FastAPI()
-model = YOLO(r"utils/master.pt")  # Load YOLOv11 model
+model = YOLO(r"/home/kingpin/Projects/Vilvom_Application/TeaLeaf-YOLOv11/master.pt")  # Load YOLOv11 model
 print("Model loaded successfully!")  # Add this line
 app.add_middleware(
     CORSMiddleware,
@@ -35,7 +35,7 @@ async def log_requests(request: Request, call_next):
 class_names = [
 "Looper_Mild",
 "Looper_Moderate",
-"Lopper_Severe",
+"Looper_Severe",
 "RSC_Mild",
 "RSC_Moderate",
 "RSC_Severe",

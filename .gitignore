@@ -1,4 +1,188 @@
-.venv
-__pycache__
+# Python Virtual Environment
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+myenv/
+.virtualenv/
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.pyc
+*.pyo
+*.pyd
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+.env.*
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.bak
+logs/
+tmp/
+temp/
+
+# IDE and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Model files and training data
+models/
+checkpoints/
+weights/
+data/
+dataset/
+datasets/
+training_data/
+validation_data/
+test_data/
+raw_data/
+processed_data/
+images/
+annotations/
+labels/
+*.pth
+*.ckpt
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+*.joblib
+*.pt
+*.safetensors
+*.bin
+*.onnx
+*.tflite
+*.pb
+
+# Keep essential model files
+!master.pt
+!src/utils/master.pt
+!src/utils/yolov11.pt
+
+# YOLO specific
+yolov*/
+YOLOv*/
+ultralytics/
+runs/
+exp*/
+
+# Test and output directories
+test_images/
+test_results/
+predictions/
+results/
+outputs/
+inference/
+detections/
+
+# Machine Learning specific
+wandb/
+tensorboard/
+mlruns/
+.mlflow/
+.dvc/
+.pytest_cache/
+.coverage
+.cache
+.hypothesis/
+.tox/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# Unit test / coverage reports
+htmlcov/
+.coverage
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# FastAPI specific
+*.db
+*.sqlite
+*.sqlite3
+instance/
+uploads/
+static/uploads/
+
+# Docker
+Dockerfile.prod
+docker-compose.override.yml
+.dockerignore
+
+# GPU/CUDA
+*.cu
+*.cuh
+
+# Large files (typically model weights)
+*.tar.gz
+*.zip
+*.rar
+*.7z
+*.gz
+*.bz2
 
 

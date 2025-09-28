@@ -27,7 +27,7 @@ pest_recommendations = {
             "mechanical": ["Manual removal of caterpillars and use of light traps.", "Prune affected branches."]
         }
     },
-    "Lopper_Severe": {
+    "Looper_Severe": {
         "name": "Looper Caterpillar (Severe)",
         "symptoms": [
             "Heavy defoliation across the plantation.",
@@ -120,6 +120,47 @@ pest_recommendations = {
             "biological": ["Immediate release of predatory mites."],
             "chemical": ["Apply Spiromesifen 240 SC or Hexythiazox 5.45 EC.", "Consider systemic miticides."],
             "mechanical": ["Prune and destroy heavily infested areas.", "Improve growing conditions."]
+        }
+    },
+
+    # Tea Green Looper (TGL)
+    "TGL_Mild": {
+        "name": "Tea Green Looper (Mild)",
+        "symptoms": [
+            "Few visible caterpillars on leaves.",
+            "Minor feeding damage on leaf edges.",
+            "Small holes in young leaves."
+        ],
+        "control_methods": {
+            "biological": ["Encourage natural enemies like parasitic wasps and predatory spiders."],
+            "chemical": ["Spot treatment with Emamectin Benzoate 5% SG if needed."],
+            "mechanical": ["Manual removal of visible caterpillars."]
+        }
+    },
+    "TGL_Moderate": {
+        "name": "Tea Green Looper (Moderate)",
+        "symptoms": [
+            "Noticeable defoliation on multiple bushes.",
+            "Visible caterpillars feeding on leaves.",
+            "Irregular holes in leaves."
+        ],
+        "control_methods": {
+            "biological": ["Release parasitic wasps and enhance natural enemy habitat."],
+            "chemical": ["Apply Flubendiamide 20% WG or Chlorantraniliprole 18.5 SC."],
+            "mechanical": ["Regular manual collection of caterpillars.", "Prune affected areas."]
+        }
+    },
+    "TGL_Severe": {
+        "name": "Tea Green Looper (Severe)",
+        "symptoms": [
+            "Heavy defoliation across the plantation.",
+            "Large numbers of caterpillars present.",
+            "Severe damage to young shoots and leaves."
+        ],
+        "control_methods": {
+            "biological": ["Immediate release of biological control agents."],
+            "chemical": ["Immediate application of recommended insecticides.", "Consider systemic treatments."],
+            "mechanical": ["Intensive manual removal.", "Prune and destroy heavily infested areas."]
         }
     },
 
