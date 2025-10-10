@@ -10,7 +10,7 @@ from PIL import Image
 from utils.rec import pest_recommendations
 
 app = FastAPI()
-model = YOLO(r"/home/kingpin/Projects/Vilvom_Application/TeaLeaf-YOLOv11/master.pt")  # Load YOLOv11 model
+model = YOLO("../master.pt")  # Load YOLOv11 model
 print("Model loaded successfully!")  # Add this line
 app.add_middleware(
     CORSMiddleware,
@@ -81,7 +81,7 @@ async def predict(file: UploadFile = File(...)):
                     cv2.rectangle(image_cv, (x1, y1), (x2, y2), (0, 255, 0), 4)
 
                     # Label
-                    label_text = f"{prediction_label} ({confidence_score:.2f})"
+                    label_text = f"{prediction_label}"
                     cv2.putText(
                         image_cv,
                         label_text,

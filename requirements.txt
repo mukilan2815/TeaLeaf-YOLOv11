@@ -1,4 +1,4 @@
-clsabsl-py==2.1.0
+absl-py==2.1.0
 annotated-types==0.7.0
 anyio==4.8.0
 astunparse==1.6.3
@@ -62,7 +62,6 @@ sympy==1.13.1
 tensorboard==2.18.0
 tensorboard-data-server==0.7.2
 tensorflow==2.18.0
-tensorflow_intel==2.18.0
 termcolor==2.5.0
 torch==2.6.0
 torchvision==0.21.0
