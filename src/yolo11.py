@@ -1,5 +1,6 @@
 import io
 import base64
+import os
 import uvicorn
 import numpy as np
 import cv2
@@ -10,8 +11,19 @@ from PIL import Image
 from utils.rec import pest_recommendations
 
 app = FastAPI()
-model = YOLO("../master.pt")  # Load YOLOv11 model
-print("Model loaded successfully!")  # Add this line
+
+# Determine model path based on execution context
+if os.path.exists("/app/master.pt"):
+    model_path = "/app/master.pt"  # Docker container path
+else:
+    # model_path = "../master.pt"  # Local development path
+    # Use path relative to this script file to ensure it works from any CWD
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    model_path = os.path.join(script_dir, "..", "master.pt")
+
+print(f"Loading YOLO model from: {model_path}")
+model = YOLO(model_path)
+print("Model loaded successfully!")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -150,7 +162,7 @@ async def predict(file: UploadFile = File(...)):
                 else "No chemical control available."
             ),
             "mechanical_control": (
-                recommendation["control_methods"]["mechanical"]
+                recommendation["control_methods"]["cultural"]
                 if recommendation
                 else "No mechanical control available."
             ),
